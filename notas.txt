@@ -1,41 +1,57 @@
-¿Qué son y cómo se usan las peticiones HTTP?
+Métodos, cabeceras y estados
 
-Protocolo HTTP:
-  -Protocolo de comunicación que permite la transferencia de información en la web.
-  -Servidores, maquinas, clientes, puntos de IoT, cualquier elemento que se comunique por
-    internet, lo hara con este protocolo.
-  -Importante porque es el lenguaje común para las comunicaciones.
+Metodos:
+  -GET: Recoger info. del server.
+    .Información de un producto.
+    .Listado de elementos.
+    .Ver una página HTML o un archivo CSS.
+  -PUT: Reemplazar (por completo) información en el server.
+    .Cambiar contenido de una página.
+    .Remplazar un producto por otro.
+    .Editar un mensaje.
+  -DELETE: Eliminar información del servidor.
+  -POST: Enviar info. al servidor.
+    .Añadir un producto.
+    .Enviar un formulario.
+  -PATCH: Cuando queremos editar solo una parte de la información.
+    .Cambiar la foto de un usuario.
+    .Modificar un precio.
+  -OPTIONS: Pedir info. sobre los metodos.
+    .Saber sí podemos ejecutar alguno de los otros metodos.
 
-¿Cómo es una petición?
-  -Tenemos un cliente: un celular, computador, raspberry, otro servidor.
-  -Este envia la peticion hacia internet, y este la envia hacia el servidor.
-  -Este servidor, enviaría una respuesta hacia internet, y el internet hacia el cliente.
-  
-Ejemplo de petición: GET /index.html HTTP/1.1
-  -Sintaxis:
-    .GET: Qué hará la petición.
-    ./index.html: Que estamos solicitando.
-    .HTTP/1.1: Protocolo. Aquí es importante definir la versión del http, porque pueden haber 
-      errores sí no se usa la misma.
-  -Parametros que puede requerir la conexión:
-    .Host: www.example.com (a donde lo estoy pidiendo).
-    .Referer: www.google.com (de donde viene la petición)
-    .User-agent: Mozilla/5.0 (navegador)
-    .Connection: keep-alive (info. de la conexión)
+Cabeceras:
+  -Información contextual de la petición.
+  -No es lo que quiero hacer, sino cómo quiero hacerlo.
+  -Cabeceras en POST-PUT-PATCH:
+    .AUTENTICACIÓN: 
+      .authorization: Asegurarnos de que podemos pedir cosas.
+    .CACHE: Almacenamiento temporal. Gestionar durante cuánto tiempo la respuesta será la 
+      misma. Nos permite que se hagan menos peticiones y así hacer menos procesos.
+        .Cache-control.
+        .Expires.
+    .INDICACIONES
+    .CONDICIONES
+    .CORS: "Cross Origin Resource Sharing".
+      .Access-Control-allow-origin: Sí podemos o no manejear información de afuera de nuestro 
+        servidor, para esto tenemos la cabecera.
+      .accept: Define el contenido que acepta.
+        -accept-charset. Con un charset definido.
+        -accept-encoding. Codificado de una manera definida.
+    .COOKIES: Compartir info. entre peticiones. Guardan usuarios para recordarlos y compartir
+      su info.
 
-Ejemplo de respuesta: HTTP/1.1 200 OK
-  -Sintaxis:
-    .HTTP/1.1: Protocolo.
-    .200: Código.
-    .Ok: Texto del código.
-  -Contenido:
-    .Date: Fecha estandard de cuando se resolvió la petición.
-    .Cabeceras:
-      -Conten-type:text/html; Tipo de contenido traído.
-      -Content-Length:1221; Tamaño del contenido traído.
-    .Cuerpo: <html></html>
-
-Puntos clave en todas las peticiones http
-  Metodos: Qué queremos hacer.
-  Estado: Cómo ha ido la operación.
-  Cuerpo: Lo que devuelve el servidor.
+Estados:
+  -2xx: Todo bien.
+    .200: Todo bien.
+    .201: Creado.
+  -3xx: La petición se ha redirigido.
+    301: La petición permanece moviendose permanentemente de una dirección o servidor a otro.
+    304: No hubo ninguna modificación en este recurso.
+  -40xx: Errores del cliente.
+    .400: Bad request. El cliente envió algo mal, no debe enviar la petición de la misma 
+      manera.
+    .401: No autorizado. "No se quien eres, no te doy autorización".
+    .403: Prohibido. "Se quien eres, pero no te doy autorización".
+    .404: Not found.
+  -5xx: Errores del servidor.
+    .500: Error interno del servidor. No ofrecemos mayor detalle al cliente por seguridad.
