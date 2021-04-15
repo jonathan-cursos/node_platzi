@@ -1,57 +1,43 @@
-Métodos, cabeceras y estados
+Cuerpo y query de la petición
 
-Metodos:
-  -GET: Recoger info. del server.
-    .Información de un producto.
-    .Listado de elementos.
-    .Ver una página HTML o un archivo CSS.
-  -PUT: Reemplazar (por completo) información en el server.
-    .Cambiar contenido de una página.
-    .Remplazar un producto por otro.
-    .Editar un mensaje.
-  -DELETE: Eliminar información del servidor.
-  -POST: Enviar info. al servidor.
-    .Añadir un producto.
-    .Enviar un formulario.
-  -PATCH: Cuando queremos editar solo una parte de la información.
-    .Cambiar la foto de un usuario.
-    .Modificar un precio.
-  -OPTIONS: Pedir info. sobre los metodos.
-    .Saber sí podemos ejecutar alguno de los otros metodos.
+Cuerpo:
+  -Información que queremos añadir a la petición, o que queremos que el servidor nos dé.
+    .Los datos que el usuario quiere añadir.
+  -Imaginemos que queremos crear un usuario con nombre, usuario, email. Todos estos datos
+    irán en el cuerpo de la petición.
+  -Al devolvernos una respuesta, nos devolverá tambien estos datos, para tenerlos en cuenta.
 
-Cabeceras:
-  -Información contextual de la petición.
-  -No es lo que quiero hacer, sino cómo quiero hacerlo.
-  -Cabeceras en POST-PUT-PATCH:
-    .AUTENTICACIÓN: 
-      .authorization: Asegurarnos de que podemos pedir cosas.
-    .CACHE: Almacenamiento temporal. Gestionar durante cuánto tiempo la respuesta será la 
-      misma. Nos permite que se hagan menos peticiones y así hacer menos procesos.
-        .Cache-control.
-        .Expires.
-    .INDICACIONES
-    .CONDICIONES
-    .CORS: "Cross Origin Resource Sharing".
-      .Access-Control-allow-origin: Sí podemos o no manejear información de afuera de nuestro 
-        servidor, para esto tenemos la cabecera.
-      .accept: Define el contenido que acepta.
-        -accept-charset. Con un charset definido.
-        -accept-encoding. Codificado de una manera definida.
-    .COOKIES: Compartir info. entre peticiones. Guardan usuarios para recordarlos y compartir
-      su info.
+¿Qué tiene y cómo viene?
+  -¿Porqué a veces viene un html, a veces datos crudos? Esto lo definimos con las cebeceras
+  -2 de ellas son 'content-type' que define el tipo de contenido. Y 'content-length' que
+    informa que tan largo es el contenido.
 
-Estados:
-  -2xx: Todo bien.
-    .200: Todo bien.
-    .201: Creado.
-  -3xx: La petición se ha redirigido.
-    301: La petición permanece moviendose permanentemente de una dirección o servidor a otro.
-    304: No hubo ninguna modificación en este recurso.
-  -40xx: Errores del cliente.
-    .400: Bad request. El cliente envió algo mal, no debe enviar la petición de la misma 
-      manera.
-    .401: No autorizado. "No se quien eres, no te doy autorización".
-    .403: Prohibido. "Se quien eres, pero no te doy autorización".
-    .404: Not found.
-  -5xx: Errores del servidor.
-    .500: Error interno del servidor. No ofrecemos mayor detalle al cliente por seguridad.
+Posibles content-type:
+  -text/html: Sí hacemos una petición a una web, traemos el html.
+  -text/css: Igualmente pero para los css.
+  -image/jpeg: Cuando traemos imagenes en jpeg.
+  -application/javascript: Traemos un archivo JS, que queremos decirle al navegador que lo
+    ejecute.
+  -application/json - application/xml: No son algo que queremos ejecutar, sino que se puede
+    ejecutar. Datos en crudo que vienen en formato xml o json.
+
+Query:
+  -Permiten añadir información extra que queremos enviar al servidor.
+    .Como el orden en que queremos que se devuelvan los datos.
+    .O parametros que queremos medir.
+  -Por ejemplo, al hacer petición a la api: api.com/person?orderBy=name&age=25.
+    .En esta petición, lo que está despues de "?" son los queries.
+  -Podemos usarlos tambien para compartir datos con el frontend. Pero con cuidado, porque
+    el usuario verá los datos devueltos, no debemos devolver información sensible.
+  -Todo lo que sea información sensible irá dentro del body de la peticion, cifrados, con
+    https. Pero nunca irán por parametros del query.
+
+Ejemplo de query para compartir datos con el frontend:
+  -miweb.com?utm_source=medium.
+  -El query utm_source devuelve datos para analytics.
+  -Estos datos podemos consumirlos desde el frontend y así hacemos conexicón entre BE y FE.
+
+Estructura de las queries:
+  -Añadir '?' al final de la url.
+  -nombre=valor.
+  -Separarlos con '&'.
