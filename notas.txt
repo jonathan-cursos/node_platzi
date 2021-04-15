@@ -1,0 +1,41 @@
+¿Qué son y cómo se usan las peticiones HTTP?
+
+Protocolo HTTP:
+  -Protocolo de comunicación que permite la transferencia de información en la web.
+  -Servidores, maquinas, clientes, puntos de IoT, cualquier elemento que se comunique por
+    internet, lo hara con este protocolo.
+  -Importante porque es el lenguaje común para las comunicaciones.
+
+¿Cómo es una petición?
+  -Tenemos un cliente: un celular, computador, raspberry, otro servidor.
+  -Este envia la peticion hacia internet, y este la envia hacia el servidor.
+  -Este servidor, enviaría una respuesta hacia internet, y el internet hacia el cliente.
+  
+Ejemplo de petición: GET /index.html HTTP/1.1
+  -Sintaxis:
+    .GET: Qué hará la petición.
+    ./index.html: Que estamos solicitando.
+    .HTTP/1.1: Protocolo. Aquí es importante definir la versión del http, porque pueden haber 
+      errores sí no se usa la misma.
+  -Parametros que puede requerir la conexión:
+    .Host: www.example.com (a donde lo estoy pidiendo).
+    .Referer: www.google.com (de donde viene la petición)
+    .User-agent: Mozilla/5.0 (navegador)
+    .Connection: keep-alive (info. de la conexión)
+
+Ejemplo de respuesta: HTTP/1.1 200 OK
+  -Sintaxis:
+    .HTTP/1.1: Protocolo.
+    .200: Código.
+    .Ok: Texto del código.
+  -Contenido:
+    .Date: Fecha estandard de cuando se resolvió la petición.
+    .Cabeceras:
+      -Conten-type:text/html; Tipo de contenido traído.
+      -Content-Length:1221; Tamaño del contenido traído.
+    .Cuerpo: <html></html>
+
+Puntos clave en todas las peticiones http
+  Metodos: Qué queremos hacer.
+  Estado: Cómo ha ido la operación.
+  Cuerpo: Lo que devuelve el servidor.
