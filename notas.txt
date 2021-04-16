@@ -1,17 +1,15 @@
-¿Cómo pueden venir las peticiones?
+Recibir información desde el cliente: Body y Query
 
--Sí hacemos una petición GET, POST, DELETE, cualquiera, nos devolverá lo mismo, la página, poque usamos el 
-  metodo use().
--Esto no es lo queremos, queremos que cada metodo cumpla su función.
--Para ayudarnos con esto, existe el router del servidor.
--Nos permite separar las peticiones por cabeceras, o por metodos, o por url, etc.
--Al tener un router, ahorá de ese router, podemos indicar que es lo que queremos que pase segun el metodo 
-  usado de ese router.
+-Para trabajar de la forma más sencilla con el cuerpo de la petición, usaremos body-parser.
+-Para ello, usaremos dentro de use() (por separado, pueden ser cuantos sean) el metodo de express segun el
+  tipo de body que queremos enviar:
+    .json(): En postman, para poder hacer una petición con json, debemos ir a body > raw > y en la ultima 
+      pestaña escoger json. Escribir en formato json el cuerpo.
+    .urlencoded(): En este caso, debe tener como parametro un objeto, que tenga el elemento 'extended' en true,
+      para que acepte objetos anidados. En el caso de postman, aparece como x-www-form-urlencoded. 
+-Sí dentro de los metodos de las peticiones queremos obtener el body, estará en req.body.
 
-Creación de Router:
-  -Una const tendrá el metodo router() de express.
-  -El use() ahora solo tendrá como parametro el router. Esto para añadir el router a la app de expres.
-  -De ese router, ahora podemos sacar cada metodo, GET, POST, etc, e indicar que queremos sí se está usando 
-    ese metodo.
-
--Sí probamos haciendo una petición, ahora nos retorna especificamente lo que pedimos segun el metodo usado.
+Queries:
+  -Podríamos colocar las queries dentro de la ruta del 1er param. de cada metodo http, pero no sería escalable,
+    por lo que las queries las añadimos a la hora de que se realice una petición.
+  -Podemos obtenerlas igualmente desde la request, con 'query'.
