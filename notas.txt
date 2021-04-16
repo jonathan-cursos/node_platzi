@@ -1,43 +1,22 @@
-Cuerpo y query de la petición
+Crear un servidor HTTP desde NodeJS
 
-Cuerpo:
-  -Información que queremos añadir a la petición, o que queremos que el servidor nos dé.
-    .Los datos que el usuario quiere añadir.
-  -Imaginemos que queremos crear un usuario con nombre, usuario, email. Todos estos datos
-    irán en el cuerpo de la petición.
-  -Al devolvernos una respuesta, nos devolverá tambien estos datos, para tenerlos en cuenta.
+-Para crear un servidor con node, necesitaremos una librería que nos permita manejarlo de la mejor manera,
+  usaremos express.
+-Esta tiene muchas utilidades que no veremos en este curso, solo veremos lo necesario para crear un servidor.
 
-¿Qué tiene y cómo viene?
-  -¿Porqué a veces viene un html, a veces datos crudos? Esto lo definimos con las cebeceras
-  -2 de ellas son 'content-type' que define el tipo de contenido. Y 'content-length' que
-    informa que tan largo es el contenido.
+Creación de servidor:
+  -Importamos express, este será un metodo.
+  -Creamos el servidor: A una const, damos el valor el metodo express().
 
-Posibles content-type:
-  -text/html: Sí hacemos una petición a una web, traemos el html.
-  -text/css: Igualmente pero para los css.
-  -image/jpeg: Cuando traemos imagenes en jpeg.
-  -application/javascript: Traemos un archivo JS, que queremos decirle al navegador que lo
-    ejecute.
-  -application/json - application/xml: No son algo que queremos ejecutar, sino que se puede
-    ejecutar. Datos en crudo que vienen en formato xml o json.
+Rutas:
+  -Podemos definir que hará el servidor dependiendo de la ruta en la que nos encontremos.
+  -Para ello, usaremos el metodo use() del server.
+  -Tendrá 2 parametros:
+    .La ruta en la que se hará.
+    .Otra función con la petición y respuesta como parametros.
+  -Dentro de la función, podemos elegír que queremos que se haga en esa ruta.
+  -Usando el metodo response.send('texto'); escribimos el texto en la página.
 
-Query:
-  -Permiten añadir información extra que queremos enviar al servidor.
-    .Como el orden en que queremos que se devuelvan los datos.
-    .O parametros que queremos medir.
-  -Por ejemplo, al hacer petición a la api: api.com/person?orderBy=name&age=25.
-    .En esta petición, lo que está despues de "?" son los queries.
-  -Podemos usarlos tambien para compartir datos con el frontend. Pero con cuidado, porque
-    el usuario verá los datos devueltos, no debemos devolver información sensible.
-  -Todo lo que sea información sensible irá dentro del body de la peticion, cifrados, con
-    https. Pero nunca irán por parametros del query.
-
-Ejemplo de query para compartir datos con el frontend:
-  -miweb.com?utm_source=medium.
-  -El query utm_source devuelve datos para analytics.
-  -Estos datos podemos consumirlos desde el frontend y así hacemos conexicón entre BE y FE.
-
-Estructura de las queries:
-  -Añadir '?' al final de la url.
-  -nombre=valor.
-  -Separarlos con '&'.
+Escuchar:
+  -Para que eso funcione, necesitamos correr el servidor en un puerto.
+  -Usaremos el metodo listen() del server, y lleva como param. el puerto.
