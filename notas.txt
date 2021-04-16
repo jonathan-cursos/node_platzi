@@ -1,22 +1,17 @@
-Crear un servidor HTTP desde NodeJS
+¿Cómo pueden venir las peticiones?
 
--Para crear un servidor con node, necesitaremos una librería que nos permita manejarlo de la mejor manera,
-  usaremos express.
--Esta tiene muchas utilidades que no veremos en este curso, solo veremos lo necesario para crear un servidor.
+-Sí hacemos una petición GET, POST, DELETE, cualquiera, nos devolverá lo mismo, la página, poque usamos el 
+  metodo use().
+-Esto no es lo queremos, queremos que cada metodo cumpla su función.
+-Para ayudarnos con esto, existe el router del servidor.
+-Nos permite separar las peticiones por cabeceras, o por metodos, o por url, etc.
+-Al tener un router, ahorá de ese router, podemos indicar que es lo que queremos que pase segun el metodo 
+  usado de ese router.
 
-Creación de servidor:
-  -Importamos express, este será un metodo.
-  -Creamos el servidor: A una const, damos el valor el metodo express().
+Creación de Router:
+  -Una const tendrá el metodo router() de express.
+  -El use() ahora solo tendrá como parametro el router. Esto para añadir el router a la app de expres.
+  -De ese router, ahora podemos sacar cada metodo, GET, POST, etc, e indicar que queremos sí se está usando 
+    ese metodo.
 
-Rutas:
-  -Podemos definir que hará el servidor dependiendo de la ruta en la que nos encontremos.
-  -Para ello, usaremos el metodo use() del server.
-  -Tendrá 2 parametros:
-    .La ruta en la que se hará.
-    .Otra función con la petición y respuesta como parametros.
-  -Dentro de la función, podemos elegír que queremos que se haga en esa ruta.
-  -Usando el metodo response.send('texto'); escribimos el texto en la página.
-
-Escuchar:
-  -Para que eso funcione, necesitamos correr el servidor en un puerto.
-  -Usaremos el metodo listen() del server, y lleva como param. el puerto.
+-Sí probamos haciendo una petición, ahora nos retorna especificamente lo que pedimos segun el metodo usado.

@@ -1,13 +1,23 @@
 const express = require("express");
 require("dotenv").config();
 
-let app = express(); //Iniciar express
+let app = express();
+const router = express.Router();
 const port = process.env.PORT || 3000;
 
-app.use("/", (req, res) => {
-  //devuelve 'hola' en cualquier ruta
-  res.send("hola");
+// app.use("/", (req, res) => {
+//   res.send("hola");
+// });
+
+app.use(router); //Añadir router a la app de express
+
+router.get("/message", (req, res) => {
+  res.send("Lista de mensajes");
 });
 
-app.listen(port); // Que la app permanezca escuchando
+router.post("/message", (req, res) => {
+  res.send("Mensaje añadido");
+});
+
+app.listen(port);
 console.log(`La app está escuchando en http:localhost:${port}`);
