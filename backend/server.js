@@ -15,7 +15,6 @@ router.get("/message", (req, res) => {
   res.header({
     customHeader: "Valor personalizado",
   });
-  // res.status(200).send("Lista de mensajes");
   response.success(req, res, "Lista de mensajes");
 });
 
@@ -25,9 +24,10 @@ router.post("/message", (req, res) => {
   if (req.query.error === "ok") {
     response.error(req, res, "Error simulado", 400);
   }
-  // res.status(201).send([{ error: "", body: "Creado correctamente" }]);
   response.success(req, res, "Creado correctamente", 201);
 });
+
+app.use("/app", express.static(__dirname + "/public"));
 
 app.listen(port);
 console.log(`La app está escuchando en http:localhost:${port}`);

@@ -1,12 +1,11 @@
-Respuestas coherentes
+Servir archivos estáticos
 
--Con lo que tenemos hasta ahora, ya podemos responder a peticiones de todas las formas posibles, pero no 
-  podemos responder cada petición de una forma diferente, eso sería incoherente.
--La forma en que regularmente se responde a todas las peticiones es un objeto, donde sí hay exito, se envie
-  el error vacio, y el body (o algo parecido) con los datos, pero sí hay error, sea al reves.
--Para hacer esto, vamos a crear un modulo aparte, que tendrá 2 funciones:
-  .Una para casos donde haya exito en la petición.
-  .Otra donde haya errores.
--Estas serán llamadas dentro de cada metodo, y aquí es más bien donde se definirán las respuestas, por lo que
-  pueden requerir la request, response, codigo, mensaje u otros, que los obtendrán por parametros.
--Al definir las respuestas, por estos parametros es donde conseguimos el status, el mensaje, la request, etc..
+-Podemos servir archivos estaticos como html o css en alguna ruta, y que accediendo a esa ruta, nos muestre
+  el contenido de ese archivo (sí es html nos muestra la pagina).
+-Para ello, usaremos el metodo .use() de nuestra app de express.
+-Dentro tendrá la ruta, y el metodo de express static(), este tendrá la ruta absoluta de la carpeta donde 
+  estarán los estaticos.
+-Se puede ver el contenido de estos sí accedemos desde el navegador a la ruta en la que los servimos, y de ahí,
+  al archivo que deseamos ver.
+
+NOTA: Se intento hacer pruebas sobre los metodos, pero no dieron resultado.
