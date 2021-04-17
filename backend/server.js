@@ -10,13 +10,17 @@ app.use(express.json());
 app.use(router);
 
 router.get("/message", (req, res) => {
+  console.log(req.headers);
+  res.header({
+    customHeader: "Valor personalizado",
+  });
   res.send("Lista de mensajes");
 });
 
 router.post("/message", (req, res) => {
   console.log(req.body);
   console.log(req.query);
-  res.send("Mensaje añadido");
+  res.send("Mensaje" + req.body.text + "añadido");
 });
 
 app.listen(port);

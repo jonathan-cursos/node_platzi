@@ -1,15 +1,9 @@
-Recibir información desde el cliente: Body y Query
+Información contextual: Leer las cabeceras
 
--Para trabajar de la forma más sencilla con el cuerpo de la petición, usaremos body-parser.
--Para ello, usaremos dentro de use() (por separado, pueden ser cuantos sean) el metodo de express segun el
-  tipo de body que queremos enviar:
-    .json(): En postman, para poder hacer una petición con json, debemos ir a body > raw > y en la ultima 
-      pestaña escoger json. Escribir en formato json el cuerpo.
-    .urlencoded(): En este caso, debe tener como parametro un objeto, que tenga el elemento 'extended' en true,
-      para que acepte objetos anidados. En el caso de postman, aparece como x-www-form-urlencoded. 
--Sí dentro de los metodos de las peticiones queremos obtener el body, estará en req.body.
+Leer cabeceras:
+  -Las cabeceras que vienen podemos recuperarlas desde la request con el elemento headers.
 
-Queries:
-  -Podríamos colocar las queries dentro de la ruta del 1er param. de cada metodo http, pero no sería escalable,
-    por lo que las queries las añadimos a la hora de que se realice una petición.
-  -Podemos obtenerlas igualmente desde la request, con 'query'.
+Enviar cabeceras:
+  -Sí queremos responder con alguna cabecera, usaremos el metodo de la response header().
+  -Este llevará un objeto con las cabeceras.
+  -Aquí, podemos enviar cabecersas que ya existan, o crear las nuestras que cumplan diferentes funciones.
