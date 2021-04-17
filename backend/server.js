@@ -1,13 +1,13 @@
 const express = require("express");
-require("dotenv").config();
 const response = require("./network/response");
 
-let app = express();
+const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/app", express.static(__dirname + "/public"));
 app.use(router);
 
 router.get("/message", (req, res) => {
@@ -22,12 +22,17 @@ router.post("/message", (req, res) => {
   console.log(req.body);
   console.log(req.query);
   if (req.query.error === "ok") {
-    response.error(req, res, "Error simulado", 400);
+    response.error(
+      req,
+      res,
+      "Error interno",
+      400,
+      "El error que estamos corriendo es simulado"
+    );
   }
-  response.success(req, res, "Creado correctamente", 201);
+  // response.success(req, res, "Creado correctamente", 201); Sí corremos esta linea, y simulamos el error, nos dará error, por correr las headers del success cuando la respuesta ya fue erronea
 });
 
-app.use("/app", express.static(__dirname + "/public"));
-
-app.listen(port);
-console.log(`La app está escuchando en http:localhost:${port}`);
+app.listen(port, () => {
+  console.log(`La app está escuchando en http:localhost:${port}`);
+});

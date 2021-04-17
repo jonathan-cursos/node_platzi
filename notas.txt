@@ -1,11 +1,12 @@
-Servir archivos estáticos
+Errores: Cómo presentarlos e implicaciones en la seguridad
 
--Podemos servir archivos estaticos como html o css en alguna ruta, y que accediendo a esa ruta, nos muestre
-  el contenido de ese archivo (sí es html nos muestra la pagina).
--Para ello, usaremos el metodo .use() de nuestra app de express.
--Dentro tendrá la ruta, y el metodo de express static(), este tendrá la ruta absoluta de la carpeta donde 
-  estarán los estaticos.
--Se puede ver el contenido de estos sí accedemos desde el navegador a la ruta en la que los servimos, y de ahí,
-  al archivo que deseamos ver.
-
-NOTA: Se intento hacer pruebas sobre los metodos, pero no dieron resultado.
+-A la hora de hacer backend hay que tener muy en cuenta como mostramos los errores.
+-Esta muy bien mostrar que tipos de errores estan sucediendo, pero a veces no es la mejor opción dar mucha
+  información.
+-Por ejemplo, sí hacemos un login, y mostramos que el usuario es correcto, pero la contraseña es incorrecta,
+  estamos abriendo una brecha de seguridad, porque estamos indicando que en efecto el usuario existe, y está
+  en nuestra DB.
+-Cuando queremos mostrar al usuario un poco de información del error, pero queremos saber nosotros lo que pasó,
+  para eso están los logs.
+-Por ejemplo, cuando tenemos un error de conexión con la DB, podemos indicar al usuario que hay un error 
+  interno, pero internamente, hacemos un log con ese error.
