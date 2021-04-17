@@ -14,13 +14,18 @@ router.get("/message", (req, res) => {
   res.header({
     customHeader: "Valor personalizado",
   });
-  res.send("Lista de mensajes");
+  res.status(200).send("Lista de mensajes");
 });
 
 router.post("/message", (req, res) => {
   console.log(req.body);
   console.log(req.query);
-  res.send("Mensaje" + req.body.text + "añadido");
+  res.status(201).send([
+    {
+      error: "",
+      body: "Creado correctamente",
+    },
+  ]);
 });
 
 app.listen(port);
