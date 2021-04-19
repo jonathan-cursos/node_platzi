@@ -1,12 +1,27 @@
-Errores: Cómo presentarlos e implicaciones en la seguridad
+Conceptualmente: Rutas, controladores y bases de datos
 
--A la hora de hacer backend hay que tener muy en cuenta como mostramos los errores.
--Esta muy bien mostrar que tipos de errores estan sucediendo, pero a veces no es la mejor opción dar mucha
-  información.
--Por ejemplo, sí hacemos un login, y mostramos que el usuario es correcto, pero la contraseña es incorrecta,
-  estamos abriendo una brecha de seguridad, porque estamos indicando que en efecto el usuario existe, y está
-  en nuestra DB.
--Cuando queremos mostrar al usuario un poco de información del error, pero queremos saber nosotros lo que pasó,
-  para eso están los logs.
--Por ejemplo, cuando tenemos un error de conexión con la DB, podemos indicar al usuario que hay un error 
-  interno, pero internamente, hacemos un log con ese error.
+-Para saber como va a funcionar conceptualmente nuestra aplicación, ver la imagen de diagrama, contiene como
+  funcionará esta app, y ayudará a dividir los archivos en carpetas y archivos.
+-Viendolas así, notamos 3 capas:
+  -Capa principal: server.js.
+  -Capa de red: routes, response.
+  -Capa de componentes: Viene cada componente.
+
+-server.js: Recibe las peticiones que vienen de internet.
+-routes.js: Este archivo verá hacía donde quiere ir la petición, y la envía a ese componente.
+
+Componentes: Cada componente será una carpeta con el nombre de ese componente, y tendrá los sig. archivos:
+  -network: Recibe la petición, y gestiona todo lo relacionado con http. Le pasará toda la información al
+    controller.
+  -controller: Tendrá toda la lógica del componente (llamada Lógica del negocio). Suponiendo que tenemos un
+    componente 'mensajes', sí este necesita una fecha, si debemos hacer comprobaciones de que todo venga bien,
+    necesitamos llamar a otro componente, etc, se hará en este archivo.
+  -store: La información que sale del controller debemos almacenarla en una DB, no es escalable tener la DB
+    dentro del controller, porque sí necesitaramos hacer algun cambio de proveedor, habría que cambiar todo, 
+    entonces, la gestión de la DB se hará en este archivo. La unica responsabilidad de este archivo es decir 
+    donde y como se guarda la info. Es importante porque todos los componentes van a componerse igual, pero sí
+    un componente lo queremos guardar en otra DB, solo cambiamos el archivo store de ese componente.
+
+response.js: Teniendo muchos componentes, para hacer que todas las respuestas sean iguales, el archivo de 
+  network enviará la respuesta al response, este gestionará las respuestas. Este archivo será el que 
+  responderá al cliente final.
