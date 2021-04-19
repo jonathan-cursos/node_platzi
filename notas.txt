@@ -1,18 +1,9 @@
-Controladores: Definiendo la lógica de negocio
+Almacenando la información en una base de datos
 
--Definiremos la lógica del metodo con el cual crearemos un mensaje.
--Cada acción a realizará cada metodo se hara dentro del 'controller' cada acción será una función, y 
-  dentro del network del componente, en su respectivo metodo se ejecutará esa función.
-
-Funciones
--Las funciones como parametros deben tener los datos que son necesarios para ejecutar esa función.
--Al ejecutar esa función, para darle valor a esos parametros, una solución sería darselos por medio de 
-  datos del 'body'.
--En caso de que queramos tener datos extra que no vengan de los parametros (como una fecha), podemos 
-  guardar en un objeto esos datos, junto con los de los parametros.
--Sí queremos validar que esos datos sean colocados, retornaremos una promesa, que sea rechazada sí algun
-  dato requerido no se colocó, y resuelta en caso contrario.
--Al ser promesa, ya podemos usar el then y catch cuando se ejecute esa función, y usar el success o error
-  traido de las respuestas.
-
-Recordatorio: Para poder exportar todas las funciones del controller, exportamos un objeto con todas.
+-Para esta clase, todavia no haremos una conexión con la DB, sino que haremos un mock para simular esta.
+-El mock para hacer esto es un array, y tendremos 2 funciones que lo modifiquen.
+-Una agregará el mensaje dado como parametro a ese array, y otra retornará el array.
+-Exportaremos ambas, pero, es buena practica que al hacerlo, coloquemos un nombre a cada metodo exportado,
+  y no se coloque el de la función. En este caso, sí la función enlista los mensajes (listMessages), se
+  exportará con el nombre 'list'.
+-Cada una de estas funciones se ejecutarán en su metodo respectivo en el 'controller'.
