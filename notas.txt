@@ -1,27 +1,22 @@
-Conceptualmente: Rutas, controladores y bases de datos
+Rutas y capa de red: Responsabilidades y límites
 
--Para saber como va a funcionar conceptualmente nuestra aplicación, ver la imagen de diagrama, contiene como
-  funcionará esta app, y ayudará a dividir los archivos en carpetas y archivos.
--Viendolas así, notamos 3 capas:
-  -Capa principal: server.js.
-  -Capa de red: routes, response.
-  -Capa de componentes: Viene cada componente.
+-Vamos a crear la carpeta 'components', y crear el componente 'message', aquí, haremos el network, ademas,
+  de la capa de red crearemos 'routes' y modificaremos el server.
 
--server.js: Recibe las peticiones que vienen de internet.
--routes.js: Este archivo verá hacía donde quiere ir la petición, y la envía a ese componente.
+network: Encargado de recibir la petición, procesar la info. y envarla al controlador.
+  -Aquí tendremos los metodos del router que teníamos en el server, ya no los tendremos ahí.
+  -Debemos crear un router para usar esos metodos.
+  -Exportaremos el router por default (module.exports).
 
-Componentes: Cada componente será una carpeta con el nombre de ese componente, y tendrá los sig. archivos:
-  -network: Recibe la petición, y gestiona todo lo relacionado con http. Le pasará toda la información al
-    controller.
-  -controller: Tendrá toda la lógica del componente (llamada Lógica del negocio). Suponiendo que tenemos un
-    componente 'mensajes', sí este necesita una fecha, si debemos hacer comprobaciones de que todo venga bien,
-    necesitamos llamar a otro componente, etc, se hará en este archivo.
-  -store: La información que sale del controller debemos almacenarla en una DB, no es escalable tener la DB
-    dentro del controller, porque sí necesitaramos hacer algun cambio de proveedor, habría que cambiar todo, 
-    entonces, la gestión de la DB se hará en este archivo. La unica responsabilidad de este archivo es decir 
-    donde y como se guarda la info. Es importante porque todos los componentes van a componerse igual, pero sí
-    un componente lo queremos guardar en otra DB, solo cambiamos el archivo store de ese componente.
+routes: Este será un router, pero lo llamaremos routes para no confundirlo con el router http.
+  -Taerá el network de cada componente.
+  -Exportaremos por default una función, que tendrá 'server' por parametro. 
+  -Usará el 'use()' de este, y como parametros la ruta donde este correrá, y el network del componente que 
+    correrá ahí. Esto lo haremos por cada componente. Esto hace que cuando se acceda a esa ruta, se llame
+    a ese componente.
+  -Nota: Es por esto, que en el network, en los metodos, ya podemos usar simplemente '/'.
 
-response.js: Teniendo muchos componentes, para hacer que todas las respuestas sean iguales, el archivo de 
-  network enviará la respuesta al response, este gestionará las respuestas. Este archivo será el que 
-  responderá al cliente final.
+server:
+  -El router usado ya no será el de express, sino el de 'routes'.
+  -Invocaremos su función, que tendrá el server como parametro.
+  -El use() que tenía el router, ya no se necesita.
