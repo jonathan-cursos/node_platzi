@@ -1,10 +1,6 @@
-MongoDB: Consultar datos
+MongoDB: Eliminar Datos
 
--Lo que haremos será que al llamar a get, se obtengan los mensajes, pero sí se coloca un
-  query 'user', se traiga solo los mensajes de ese user.
--Para ello, solamente le agregamos un parametro a las funciones de get, y que sí no se
-  coloca, sea null.
--Por ello, en el store, podemos hacer que se cree un filtro (findOne) solo sí el valor
-  de este parametro sea diferente de null.
--En este caso, como buscamos en la DB por el user, en el objeto del findOne se buscará 
-  ese user.
+-En la función del store retornaremos el Model.deleteOne() e igual, tendrá el mismo filtro.
+-Al ejecutar esta función en el controller, debemos manipularla como una promesa, porque
+  es lo que devuelve deleteOne().
+-En el then se ejecuta el resolve, y en el catch, el reject.

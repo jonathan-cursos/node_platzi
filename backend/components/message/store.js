@@ -41,9 +41,16 @@ async function updateText(id, message) {
 //   return foundMessage;
 // }
 
+function deleteMessage(id) {
+  return Model.deleteOne({
+    _id: id,
+  });
+}
+
 module.exports = {
   add: addMessage,
   list: getMessages,
   update: updateText,
+  delete: deleteMessage,
   // get: getMessage,
 };
