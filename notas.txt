@@ -1,28 +1,50 @@
-Creación de una BD en MongoAtlas
+MongoDB: Almacenar y leer datos
 
--IMPORTANTE: Esta clase viene del curso de Backend con Node.js.
+-Es importante aclarar que MongoDB no tiene esquemas, pero no es buena practica trabajar
+  sin ningun tipo de esquemas, porque no sabemos el tipo de info. que hay en la DB y es
+  importante saber que estamos almecenando, como y porque lo almacenamos así.
+-Para ello, usaremos la librería 'mongoose', que permite hacer esquemas por código, y 
+  poder definirlos y cambiarlos de forma sencilla. Además hara las validaciones, y sí no
+  concuerdan, no guarda los datos.
 
--La URI de MongoDB tiene la siguiente estructura: 
-  .mongodb+srv://DB_USER:DB_PASSWORD@DB_HOST/DB_NAME
-  .En este caso, todas esas variables las representaremos como variables de entorno.
-  .Para que, en caso de cambiar de ambiente, sea facil de reemplazar.
+Creación de modelo:
+  -Dentro de cada componente creamos un archivo: model.js.
+  -Importaremos mongoose.
+  -En una constante guardamos su elemento Schema (no es necesario, pero se hace porque el
+    elememento se usará mucho).
+  -Crear un esquema: En una const guardamos una instancia de ese Schema, y tendrá un 
+    objeto con la config. de cada dato, con su tipo. Sí como tipo se pone un objeto, se 
+    puede agregar más info. a ese dato. Por ejemplo, se puede agregar el elmento 
+    'required = true' y 'type=[tipo]'. Los tipos se colocan con mayuscula y no como string.
+  -Crear modelo: Cremos y exportamos una const que tenga mongoose.Model(). Tendrá 2 params
+    un string con el nombre de la colección en la DB, y el esquema.
 
--MongoAtlas limita el acceso a las DB, por lo que en producción, al dar acceso mediante
-  red, debemos colocar unicamente al IP del dispositivo que tendrá acceso a estas.
--En desarrollo, no es necesario restringir por IP, ya que igualmente tenemos el user y
-  pass de la DB.
+Agregar y leer datos de la DB:
+  -Aquí usaremos el archivo de store, y cambiaremos los metodos.
+  -Importamos mongoose y el modelo creado.
+  -Colocamos esta línea por buena practica: mongoose.Promise = global.Promise.
+    .Esto indica que en lugar de los callbacks de mongoose se utilicen las promesas nativas
+      para resolver más fácil.
+    .En caso de usar alguna librería para promesas, podemos colocarla en lugar de las
+      nativas.
+  -Ejecutamos el metodo connect() de mongose. Lleva 2 params:
+    .Un string con el uri a la DB.
+    .Un objeto con configuración, tendrá los elementos 'useNewUrlParser' y 
+      'useUnifiedTopology' en true.
+  -Función de agregar:
+    .Creamos una constante que sea una instancia del modelo creado.
+    .Esta trae como parametro los datos que vamos a agregar.
+    .De esta ejecutamos el metodo save().
+  -Función de enlistar:
+    -En una const guardamos el metodo find() del modelo, y esto devuelve una promesa.
+    -Retornaremos esa constante, que traerá los datos.
 
-Creación y preparación de la DB:
-  -Crear un proyecto y un cluster.
-  -En 'Network access' dar acceso a las IP deseadas.
-  -En 'Database access' crear un usuario que pueda leer y escribir, tener presente el 
-    user y pass.
-  -En 'Clusters' sí escogemos connect y cualquiera de las opciones, nos dará la uri para
-    poder connectarla mediante esta opción.
-  -Creamos la DB y la colección: En el cluster, en 'Collections', agregaremos nuestros
-    propios datos y escogeremos el nombre de la coleccion y de la db.
+.Nota: Al final de este archivo tenemos el uri usado, podemos conseguirlo en la seccion
+  de conexión de MongoAtlas en 'Connect your app'.
 
 db_user_jonathangg03
 pc1xyyAsUU6e2pGs
 DB NAME: platzi_messages
-Collection name: 
+Collection name: messages
+
+uri: mongodb+srv://db_user_jonathangg03:<password>@cluster0.9mha0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
