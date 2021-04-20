@@ -1,12 +1,28 @@
-Tipos de Bases de Datos: Relacionales y No Relacionales
+Creación de una BD en MongoAtlas
 
--Bases de Datos Relacionales: no es una base de datos muy flexible, pero tiene a favor su 
-  gran soporte y el enorme desarrollo en herramientas para su uso. Si necesitamos cambiar 
-  un valor de un campo debemos hacerlo con todos los campos de nuestra BD, en cambio con 
-  NoSQL o No Relacional no es así.
+-IMPORTANTE: Esta clase viene del curso de Backend con Node.js.
 
-Bases de Datos No Relacionales: son de bases de datos sin una tabla fija como las que sí 
-  se encuentran en las bases de datos relacionales, lo que permite una alta escalabilidad 
-  en ellas. Además, es abierta y por lo tanto flexible a diferentes tipos de datos y no 
-  necesita tantos recursos para ejecutarse; de hecho, el hardware necesario no cuesta 
-  mucho.
+-La URI de MongoDB tiene la siguiente estructura: 
+  .mongodb+srv://DB_USER:DB_PASSWORD@DB_HOST/DB_NAME
+  .En este caso, todas esas variables las representaremos como variables de entorno.
+  .Para que, en caso de cambiar de ambiente, sea facil de reemplazar.
+
+-MongoAtlas limita el acceso a las DB, por lo que en producción, al dar acceso mediante
+  red, debemos colocar unicamente al IP del dispositivo que tendrá acceso a estas.
+-En desarrollo, no es necesario restringir por IP, ya que igualmente tenemos el user y
+  pass de la DB.
+
+Creación y preparación de la DB:
+  -Crear un proyecto y un cluster.
+  -En 'Network access' dar acceso a las IP deseadas.
+  -En 'Database access' crear un usuario que pueda leer y escribir, tener presente el 
+    user y pass.
+  -En 'Clusters' sí escogemos connect y cualquiera de las opciones, nos dará la uri para
+    poder connectarla mediante esta opción.
+  -Creamos la DB y la colección: En el cluster, en 'Collections', agregaremos nuestros
+    propios datos y escogeremos el nombre de la coleccion y de la db.
+
+db_user_jonathangg03
+pc1xyyAsUU6e2pGs
+DB NAME: platzi_messages
+Collection name: 
