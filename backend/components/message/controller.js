@@ -17,11 +17,17 @@ function addMessage(user, message) {
   });
 }
 
-function getMessage() {
+function getMessages(filterUser) {
   return new Promise((resolve, reject) => {
-    resolve(store.list());
+    resolve(store.list(filterUser));
   });
 }
+
+// function getMessage(id) {
+//   return new Promise((resolve, reject) => {
+//     resolve(store.get(id));
+//   });
+// }
 
 function updateMessage(id, message) {
   return new Promise(async (resolve, reject) => {
@@ -36,6 +42,7 @@ function updateMessage(id, message) {
 
 module.exports = {
   addMessage,
-  getMessage,
+  getMessages,
+  // getMessage,
   updateMessage,
 };

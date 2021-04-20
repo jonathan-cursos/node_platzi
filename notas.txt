@@ -1,21 +1,10 @@
-MongoDB: Actualizar datos
+MongoDB: Consultar datos
 
--En este caso, vamos a sacar el id del mensaje que vamos a cambiar parcialmente desde 
-  el url.
--Para ello, al crear el metodo en el network, en la ruta, usamos ':id' en la ruta, esto
-  definirá la variable id dentro de la ruta.
--Podemos capturar su valor desde request.params.[variable].
--Para una modificación parcial usamos patch.
-
--Aquí explicaremos solo el metodo del store(), ya que en composición del controller y del
-  network es similar (excepto que el id lo sacaremos de la url, no del body).
-
-Función en el store:
-  -Para encontrar el mensaje con el id que vamos a usar, usaremos el metodo Model.findOne(). 
-    Tendrá un objeto, que tenga como 'key' el dato del elemento de la colección que 
-    estamos buscando. (el id en este caso). Y como valor, el id que buscamos.
-  -Eso nos devolverá un objeto, con todos los datos de el mensaje buscado.
-  -A eso, le daremos como valor, el mensaje actualizado.
-  -Para guardarlo, usamos su metodo save().
-  -Sí queremos retornar aquí el elemento entero que se enviará, ese save debemos 
-    guardarlo en una variable, y retornarlo.
+-Lo que haremos será que al llamar a get, se obtengan los mensajes, pero sí se coloca un
+  query 'user', se traiga solo los mensajes de ese user.
+-Para ello, solamente le agregamos un parametro a las funciones de get, y que sí no se
+  coloca, sea null.
+-Por ello, en el store, podemos hacer que se cree un filtro (findOne) solo sí el valor
+  de este parametro sea diferente de null.
+-En este caso, como buscamos en la DB por el user, en el objeto del findOne se buscará 
+  ese user.

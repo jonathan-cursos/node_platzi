@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 const Model = require("./model");
 
-mongoose.Promise = global.Promise; //Buena practica: Para que en lugar de los callbacks de mongoose se utilicen las promesas para resolver más fácil
-//Sí usamos librerias de promesas, podemos indicar que use esas en lugar de las nativas
+mongoose.Promise = global.Promise;
 mongoose.connect(
   "mongodb+srv://db_user_jonathangg03:pc1xyyAsUU6e2pGs@cluster0.9mha0.mongodb.net/platzi_messages?retryWrites=true&w=majority",
   {
-    useNewUrlParser: true, //buena practica para que no haya problema sí el servidor es nuevo o antiguo
-    useUnifiedTopology: true, //Sino dara un warning
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   }
 );
 console.log("[db]: Conectada con exito");
@@ -17,8 +16,12 @@ function addMessage(message) {
   myMessage.save();
 }
 
-async function getMessage() {
-  const messages = await Model.find();
+async function getMessages(filterUser) {
+  let filter = {};
+  if (filterUser !== null) {
+    filter = { user: filterUser };
+  }
+  const messages = await Model.find(filter);
   return messages;
 }
 
@@ -31,11 +34,16 @@ async function updateText(id, message) {
   return newMessage;
 }
 
+// async function getMessage(id) {
+//   const foundMessage = await Model.findOne({
+//     _id: id,
+//   });
+//   return foundMessage;
+// }
+
 module.exports = {
   add: addMessage,
-  list: getMessage,
+  list: getMessages,
   update: updateText,
-  //get: para obtener uno en specifico
-  //update
-  //delete
+  // get: getMessage,
 };
