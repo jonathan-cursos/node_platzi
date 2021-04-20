@@ -1,15 +1,4 @@
-const mongoose = require("mongoose");
 const Model = require("./model");
-
-mongoose.Promise = global.Promise;
-mongoose.connect(
-  "mongodb+srv://db_user_jonathangg03:pc1xyyAsUU6e2pGs@cluster0.9mha0.mongodb.net/platzi_messages?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-console.log("[db]: Conectada con exito");
 
 function addMessage(message) {
   const myMessage = new Model(message);

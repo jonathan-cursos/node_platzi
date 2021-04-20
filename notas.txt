@@ -1,6 +1,10 @@
-MongoDB: Eliminar Datos
+Gestionar conexiones a la base de datos desde la API
 
--En la función del store retornaremos el Model.deleteOne() e igual, tendrá el mismo filtro.
--Al ejecutar esta función en el controller, debemos manipularla como una promesa, porque
-  es lo que devuelve deleteOne().
--En el then se ejecuta el resolve, y en el catch, el reject.
+-Para gestionar las conexiones a la DB, crearemos un archivo db.js, que tenga una función
+  a la cual se le pase el url de conexión cuando nos vayamos a connectar a la DB.
+
+-En store.js solo tendremos lo relacionado al Model.
+-En db.js, haremos toda la conexión que haciamos en store, debe estar dentro de una func.
+  .Antes de la declaración de la función definiremos las promesas a usar.
+  .La función será asincrona, y lo que se espera es la conexión.
+-En el server, importaremos esta función, y al ejecuarla, le pasamos la uri deseada.
