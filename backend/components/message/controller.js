@@ -23,7 +23,19 @@ function getMessage() {
   });
 }
 
+function updateMessage(id, message) {
+  return new Promise(async (resolve, reject) => {
+    if (!id || !message) {
+      reject("No se ingresó un ID");
+      return false;
+    }
+    const result = await store.update(id, message);
+    resolve(result);
+  });
+}
+
 module.exports = {
   addMessage,
   getMessage,
+  updateMessage,
 };

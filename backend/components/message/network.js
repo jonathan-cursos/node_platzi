@@ -26,4 +26,11 @@ router.post("/", (req, res) => {
     );
 });
 
+router.patch("/:id", (req, res) => {
+  controller
+    .updateMessage(req.params.id, req.body.message)
+    .then((data) => response.success(req, res, data, 200))
+    .catch((error) => response.error(req, res, "Internal error", 500, error));
+});
+
 module.exports = router;

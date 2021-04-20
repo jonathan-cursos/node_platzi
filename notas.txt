@@ -1,50 +1,21 @@
-MongoDB: Almacenar y leer datos
+MongoDB: Actualizar datos
 
--Es importante aclarar que MongoDB no tiene esquemas, pero no es buena practica trabajar
-  sin ningun tipo de esquemas, porque no sabemos el tipo de info. que hay en la DB y es
-  importante saber que estamos almecenando, como y porque lo almacenamos así.
--Para ello, usaremos la librería 'mongoose', que permite hacer esquemas por código, y 
-  poder definirlos y cambiarlos de forma sencilla. Además hara las validaciones, y sí no
-  concuerdan, no guarda los datos.
+-En este caso, vamos a sacar el id del mensaje que vamos a cambiar parcialmente desde 
+  el url.
+-Para ello, al crear el metodo en el network, en la ruta, usamos ':id' en la ruta, esto
+  definirá la variable id dentro de la ruta.
+-Podemos capturar su valor desde request.params.[variable].
+-Para una modificación parcial usamos patch.
 
-Creación de modelo:
-  -Dentro de cada componente creamos un archivo: model.js.
-  -Importaremos mongoose.
-  -En una constante guardamos su elemento Schema (no es necesario, pero se hace porque el
-    elememento se usará mucho).
-  -Crear un esquema: En una const guardamos una instancia de ese Schema, y tendrá un 
-    objeto con la config. de cada dato, con su tipo. Sí como tipo se pone un objeto, se 
-    puede agregar más info. a ese dato. Por ejemplo, se puede agregar el elmento 
-    'required = true' y 'type=[tipo]'. Los tipos se colocan con mayuscula y no como string.
-  -Crear modelo: Cremos y exportamos una const que tenga mongoose.Model(). Tendrá 2 params
-    un string con el nombre de la colección en la DB, y el esquema.
+-Aquí explicaremos solo el metodo del store(), ya que en composición del controller y del
+  network es similar (excepto que el id lo sacaremos de la url, no del body).
 
-Agregar y leer datos de la DB:
-  -Aquí usaremos el archivo de store, y cambiaremos los metodos.
-  -Importamos mongoose y el modelo creado.
-  -Colocamos esta línea por buena practica: mongoose.Promise = global.Promise.
-    .Esto indica que en lugar de los callbacks de mongoose se utilicen las promesas nativas
-      para resolver más fácil.
-    .En caso de usar alguna librería para promesas, podemos colocarla en lugar de las
-      nativas.
-  -Ejecutamos el metodo connect() de mongose. Lleva 2 params:
-    .Un string con el uri a la DB.
-    .Un objeto con configuración, tendrá los elementos 'useNewUrlParser' y 
-      'useUnifiedTopology' en true.
-  -Función de agregar:
-    .Creamos una constante que sea una instancia del modelo creado.
-    .Esta trae como parametro los datos que vamos a agregar.
-    .De esta ejecutamos el metodo save().
-  -Función de enlistar:
-    -En una const guardamos el metodo find() del modelo, y esto devuelve una promesa.
-    -Retornaremos esa constante, que traerá los datos.
-
-.Nota: Al final de este archivo tenemos el uri usado, podemos conseguirlo en la seccion
-  de conexión de MongoAtlas en 'Connect your app'.
-
-db_user_jonathangg03
-pc1xyyAsUU6e2pGs
-DB NAME: platzi_messages
-Collection name: messages
-
-uri: mongodb+srv://db_user_jonathangg03:<password>@cluster0.9mha0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+Función en el store:
+  -Para encontrar el mensaje con el id que vamos a usar, usaremos el metodo Model.findOne(). 
+    Tendrá un objeto, que tenga como 'key' el dato del elemento de la colección que 
+    estamos buscando. (el id en este caso). Y como valor, el id que buscamos.
+  -Eso nos devolverá un objeto, con todos los datos de el mensaje buscado.
+  -A eso, le daremos como valor, el mensaje actualizado.
+  -Para guardarlo, usamos su metodo save().
+  -Sí queremos retornar aquí el elemento entero que se enviará, ese save debemos 
+    guardarlo en una variable, y retornarlo.
