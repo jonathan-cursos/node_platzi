@@ -1,7 +1,38 @@
-Escalando la arquitectura: Múltiples entidades
+Relacionando nuestras entidades
 
--Vamos a agregar el componente user, hay 1 diferencia de como lo hicimos.
--Sí en el store retornamos la ejecución del metodo, estamos retornando una promesa, lo 
-  que podemos hacer para capturar su error, es que, sí no hay un dato, retornemos 
-  Promise.reject(), y así, ya en el network podemos usar un catch.
--Recordar agregar si instancia al routes.
+-Vamos a hacer que el user en la entidad de mensajes sea un ID, al ingresar ese ID, debe
+  ser uno que esté en la entidad de usuarios.
+-Al traer los datos con GET, debemos popular esos datos. Esto para que no nos muestre
+  solo el ID, sino toda su info.
+-Popular datos: Sí el dato ingresado es una referencia a un elemento de nuestra DB, se
+  busca y se inserta toda la info. de ese elemento.
+
+Esquema de mensajes:
+  -El dato 'user', será un objeto, este tendrá como tipo 'Schema.ObjectId', y un elemento
+    'ref' que lleve como valor el nombre de la colección a la que hará referencia.
+
+Metodo get del store:
+  -Cambiaremos la estructura, ya no será una función asincrona, sino que retornará una
+    promesa.
+  -El metodo find() de antes lo ejecutabamos ahí, como este trae los datos ahí hacemos
+    el populate.
+  -Para ello, del find usaremos 2 metodos, el populate() y el exec().
+  -populate(): Le pasamos por parametro el elemento del esquema que queremos popular 
+    (user).
+  -exec(): La populación no es automatica, con exec() la ejecutamos. Lleva por param.
+    una función con 2 elementos, el error y los datos populados. Dentro de esta func.
+    hacemos el resolve/reject de la promesa.
+
+-En esta clase se empezo con el modelo del componente chat. Este relaciona varios 
+  usuarios, que crearán un chat.
+-El esquema es distinto, ya que el elemento users, va a tener una serie de usuarios, 
+  entonces será un array de objetos, estos tendrán como tipo ObjectId, y hacer referencia
+  a la entidad de usuarios.
+-El resto quedó como reto, hay que hacer 2 metodos:
+  .post: debe recibir un array de usuarios que creen el chat.
+  .get: donde se enlisten todos los chats.
+
+Datos de usuarios almacenados en la DB para probar:
+  -Jona:60802cd643022618cf26e97f
+  -Ken:60802ce643022618cf26e980
+  -Sebas:608032fd1c30101d79fc18d4

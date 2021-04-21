@@ -5,13 +5,24 @@ function addMessage(message) {
   myMessage.save();
 }
 
-async function getMessages(filterUser) {
-  let filter = {};
-  if (filterUser !== null) {
-    filter = { user: filterUser };
-  }
-  const messages = await Model.find(filter);
-  return messages;
+function getMessages(filterUser) {
+  //Cambiandola para popular datos
+  return new Promise((resolve, reject) => {
+    let filter = {};
+    if (filterUser !== null) {
+      filter = { user: filterUser };
+    }
+    Model.find(filter)
+      .populate("user")
+      .exec((error, populatedData) => {
+        if (error) {
+          reject(error);
+          return false;
+        }
+        resolve(populatedData);
+      });
+    // .catch((e) => reject(e)); No se hace el catch aquí, porque ya se hace internamente en el populated
+  });
 }
 
 async function updateText(id, message) {
@@ -22,13 +33,6 @@ async function updateText(id, message) {
   const newMessage = await foundMessage.save();
   return newMessage;
 }
-
-// async function getMessage(id) {
-//   const foundMessage = await Model.findOne({
-//     _id: id,
-//   });
-//   return foundMessage;
-// }
 
 function deleteMessage(id) {
   return Model.deleteOne({
