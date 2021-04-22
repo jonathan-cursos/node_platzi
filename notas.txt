@@ -1,38 +1,19 @@
-Cómo recibir ficheros desde NodeJS
+Guardar el fichero en el servidor
 
--Lo primero que debemos hacer es completar el reto.
--Concretamente es esto lo que haremos:
-  .Para enviar un chat enviaremos un array 'users', que tenga todos los usuarios que 
-    pertenecen a ese chat. El get se hará solo sí se agrega en la ruta un userId, y 
-    al hacerlo, nos debe mostrar los chats a los que pertenece ese usuario.
-  .Al enviar un mensaje, debemos agregar un id de chat en el body, y que cuando 
-    solicitamos por el query 'chat' en /messages, nos muestre los mensajes que pertenecen
-    a ese chat, quitando el filtro anterior.
+-Al estar enviando un archivo, podemos acceder a este desde los metodos a traves de la
+  request, en su elemento file.
+-Podemos acceder así a toda su info. Como la ruta principal desde donde estamos.
+-La idea no es guardar el archivo en la DB, sino una referencia a ellos.
+-En nuestro router tenemos una ruta para archivos estaticos, por lo que, el archivo que 
+  vamos a serir debemos tenerlo en la carpeta que estamos sirviendo en esa ruta.
+-En el post, colocaremos que se guarde ese req.file, y debemos colocarlo tambien en el
+  controller.
+-En el controller debemos guardar como elemento del archivo, la ruta hacia el, que estará 
+  en el localhost, en la ruta donde guardamos ese archivo, y colocaremos el nombre del 
+  archivo.
+-Sí el archivo será uno que estamos enviando por post, y lo estamos guardando, como el 
+  nombre cambia, lo sacaremos del parametro de ese archivo, en el elemento filename.
+-Debemos tambien colocar el esquema, para que guarde esa referencia en un elemento de tipo
+  String.
 
--Es importante recalcar, que si queremos hacer una validación de un elemento que este 
-  dentro de un objeto, como en el caso de mensajes, que filtramos por el id del chat, 
-  pero chat es un ObjectId dentro del objeto de mensajes, lo realizamos de la misma 
-  manera, realizando el filtro buscando chat, que sea igual al valor del parametro.
-
--Para enviar archivos hay que tener muy en cuenta que estos no son más que textos, que
-  pueden ser muy largos, por lo que al final terminaremos enviando texto.
--Para ello se realiza una acción llamada 'multiparter'.
--En Insomnia o Postman, aparece una opción como 'form-data', dentro de esta, en cada 
-  espacio, podemos indicar el tipo de dato, escogeremos 'file'.
--Instalaremos multer para procesar el archivo, este se encarga de la manipulación del
-  archivo, gestión de tipo, y guardarlo en el disco.
-
-Configuración del network:
-  -El network del componente es lo unico que cambiará.
-  -Importamos multer.
-  -Lo ejecutamos en una variable, y lleva como parametro un objeto con la configuración.
-    .Por ahora, solo llevará el elemento 'dest', que indica donde guardar el archivo.
-  -En el metodo post agregaremos un middleware, que es un punto donde va a pasar antes 
-    de entrar en una función. Para ello, colocamos un metodo antes del parametro que es
-    la función del post.
-  -El metodo será single() del multer creado, y como parametro, el nombre del elemento al
-    enviar el archivo.
-  -Single es para indicar de donde saca el archivo (el nombre del campo en postman, por 
-    ejemplo).
-
-//midleware: Punto donde va a pasar antes de entrar en una función
+-Sí accedemos a la ruta de ese archivo, debería descargarse (no está funcionando).

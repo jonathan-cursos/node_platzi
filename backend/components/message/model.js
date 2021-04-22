@@ -16,6 +16,7 @@ const mySchema = new Schema({
     ref: "Chat",
   },
   date: Date,
+  image: String,
 });
 
 const model = mongoose.model("Messages", mySchema);

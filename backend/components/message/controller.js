@@ -1,17 +1,23 @@
 const store = require("./store");
 
-function addMessage(user, message, chat) {
+function addMessage(user, message, chat, file) {
   return new Promise((resolve, reject) => {
     if (!user || !message || !chat) {
       console.error("[messsage controller]: No hay usuario o mensaje");
       reject("Los datos son incorrectos");
       return false;
     }
+
+    let fileUrl = "";
+    if (file) {
+      fileUrl = "http://localhost:3000/app/files/" + file.filename;
+    }
     const fullMessage = {
       user: user,
       message: message,
       chat: chat,
-      date: new Date(), //date puede ser un dato que no queremos darle al usuario, pero que nosotros queramos saber
+      date: new Date(),
+      image: fileUrl,
     };
     store.add(fullMessage);
     resolve(fullMessage);
