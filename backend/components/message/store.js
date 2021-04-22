@@ -5,15 +5,15 @@ function addMessage(message) {
   myMessage.save();
 }
 
-function getMessages(filterUser) {
+function getMessages(filterChat) {
   //Cambiandola para popular datos
   return new Promise((resolve, reject) => {
     let filter = {};
-    if (filterUser !== null) {
-      filter = { user: filterUser };
+    if (filterChat !== null) {
+      filter = { chat: filterChat };
     }
     Model.find(filter)
-      .populate("user")
+      .populate(["user", "chat"])
       .exec((error, populatedData) => {
         if (error) {
           reject(error);

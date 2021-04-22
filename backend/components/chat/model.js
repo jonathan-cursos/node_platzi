@@ -5,7 +5,7 @@ const Schema = mongoose.Schema; //sacamos mongoose.Schema porque lo usaremos muc
 const mySchema = new Schema({
   users: [
     {
-      type: Schema.objectId,
+      type: Schema.ObjectId,
       ref: "user",
     },
   ],

@@ -1,12 +1,16 @@
 const express = require("express");
+const multer = require("multer");
 const response = require("../../network/response");
 const controller = require("./controller");
 
 const router = express.Router();
+const upload = multer({
+  dest: "uploads/",
+});
 
 router.get("/", (req, res) => {
   controller
-    .getMessages(req.query.user || null)
+    .getMessages(req.query.chat || null)
     .then((messageList) => response.success(req, res, messageList, 200))
     .catch((error) => response.error(req, res, "Unexpected error", 500, error));
 });
@@ -18,9 +22,9 @@ router.get("/", (req, res) => {
 //     .catch((error) => response.error(req, res, "Error interno", 500, error));
 // });
 
-router.post("/", (req, res) => {
+router.post("/", upload.single("image"), (req, res) => {
   controller
-    .addMessage(req.body.user, req.body.message)
+    .addMessage(req.body.user, req.body.message, req.body.chat)
     .then((fullMessage) => response.success(req, res, fullMessage, 201))
     .catch((error) =>
       response.error(

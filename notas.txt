@@ -1,38 +1,38 @@
-Relacionando nuestras entidades
+Cómo recibir ficheros desde NodeJS
 
--Vamos a hacer que el user en la entidad de mensajes sea un ID, al ingresar ese ID, debe
-  ser uno que esté en la entidad de usuarios.
--Al traer los datos con GET, debemos popular esos datos. Esto para que no nos muestre
-  solo el ID, sino toda su info.
--Popular datos: Sí el dato ingresado es una referencia a un elemento de nuestra DB, se
-  busca y se inserta toda la info. de ese elemento.
+-Lo primero que debemos hacer es completar el reto.
+-Concretamente es esto lo que haremos:
+  .Para enviar un chat enviaremos un array 'users', que tenga todos los usuarios que 
+    pertenecen a ese chat. El get se hará solo sí se agrega en la ruta un userId, y 
+    al hacerlo, nos debe mostrar los chats a los que pertenece ese usuario.
+  .Al enviar un mensaje, debemos agregar un id de chat en el body, y que cuando 
+    solicitamos por el query 'chat' en /messages, nos muestre los mensajes que pertenecen
+    a ese chat, quitando el filtro anterior.
 
-Esquema de mensajes:
-  -El dato 'user', será un objeto, este tendrá como tipo 'Schema.ObjectId', y un elemento
-    'ref' que lleve como valor el nombre de la colección a la que hará referencia.
+-Es importante recalcar, que si queremos hacer una validación de un elemento que este 
+  dentro de un objeto, como en el caso de mensajes, que filtramos por el id del chat, 
+  pero chat es un ObjectId dentro del objeto de mensajes, lo realizamos de la misma 
+  manera, realizando el filtro buscando chat, que sea igual al valor del parametro.
 
-Metodo get del store:
-  -Cambiaremos la estructura, ya no será una función asincrona, sino que retornará una
-    promesa.
-  -El metodo find() de antes lo ejecutabamos ahí, como este trae los datos ahí hacemos
-    el populate.
-  -Para ello, del find usaremos 2 metodos, el populate() y el exec().
-  -populate(): Le pasamos por parametro el elemento del esquema que queremos popular 
-    (user).
-  -exec(): La populación no es automatica, con exec() la ejecutamos. Lleva por param.
-    una función con 2 elementos, el error y los datos populados. Dentro de esta func.
-    hacemos el resolve/reject de la promesa.
+-Para enviar archivos hay que tener muy en cuenta que estos no son más que textos, que
+  pueden ser muy largos, por lo que al final terminaremos enviando texto.
+-Para ello se realiza una acción llamada 'multiparter'.
+-En Insomnia o Postman, aparece una opción como 'form-data', dentro de esta, en cada 
+  espacio, podemos indicar el tipo de dato, escogeremos 'file'.
+-Instalaremos multer para procesar el archivo, este se encarga de la manipulación del
+  archivo, gestión de tipo, y guardarlo en el disco.
 
--En esta clase se empezo con el modelo del componente chat. Este relaciona varios 
-  usuarios, que crearán un chat.
--El esquema es distinto, ya que el elemento users, va a tener una serie de usuarios, 
-  entonces será un array de objetos, estos tendrán como tipo ObjectId, y hacer referencia
-  a la entidad de usuarios.
--El resto quedó como reto, hay que hacer 2 metodos:
-  .post: debe recibir un array de usuarios que creen el chat.
-  .get: donde se enlisten todos los chats.
+Configuración del network:
+  -El network del componente es lo unico que cambiará.
+  -Importamos multer.
+  -Lo ejecutamos en una variable, y lleva como parametro un objeto con la configuración.
+    .Por ahora, solo llevará el elemento 'dest', que indica donde guardar el archivo.
+  -En el metodo post agregaremos un middleware, que es un punto donde va a pasar antes 
+    de entrar en una función. Para ello, colocamos un metodo antes del parametro que es
+    la función del post.
+  -El metodo será single() del multer creado, y como parametro, el nombre del elemento al
+    enviar el archivo.
+  -Single es para indicar de donde saca el archivo (el nombre del campo en postman, por 
+    ejemplo).
 
-Datos de usuarios almacenados en la DB para probar:
-  -Jona:60802cd643022618cf26e97f
-  -Ken:60802ce643022618cf26e980
-  -Sebas:608032fd1c30101d79fc18d4
+//midleware: Punto donde va a pasar antes de entrar en una función

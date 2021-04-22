@@ -1,8 +1,8 @@
 const store = require("./store");
 
-function addMessage(user, message) {
+function addMessage(user, message, chat) {
   return new Promise((resolve, reject) => {
-    if (!user || !message) {
+    if (!user || !message || !chat) {
       console.error("[messsage controller]: No hay usuario o mensaje");
       reject("Los datos son incorrectos");
       return false;
@@ -10,6 +10,7 @@ function addMessage(user, message) {
     const fullMessage = {
       user: user,
       message: message,
+      chat: chat,
       date: new Date(), //date puede ser un dato que no queremos darle al usuario, pero que nosotros queramos saber
     };
     store.add(fullMessage);
@@ -17,9 +18,9 @@ function addMessage(user, message) {
   });
 }
 
-function getMessages(filterUser) {
+function getMessages(filterChat) {
   return new Promise((resolve, reject) => {
-    resolve(store.list(filterUser));
+    resolve(store.list(filterChat));
   });
 }
 
