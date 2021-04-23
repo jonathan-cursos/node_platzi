@@ -1,26 +1,43 @@
-WebSockets: Qué son, por qué son interesantes y cómo usarlos
+Conectar la API al servidor de WebSockets
 
--Como se dijo al inicio, el cliente hace una petición al servidor para consultar mensajes.
--Imaginemos que quremos saber constantemente si hay mensajes nuevos.
--Una solución puede ser tener un endpoint /newMessages, que se ejecute por ejemplo cada
-  2s.
--El problema con esto, es que sí son demasiados usuarios, serían todas esas peticiones cada
-  2s, que sería un desperdicio de recursos grande.
--Para solucionar esto existe un protocolo diferente a http, llamado websockets.
+-Lo que haremos será que, si abrimos un html que vamos a servir en 2 pestañas diferentes,
+  al hacer un post, nos va a mostrar por consola el mismo mensaje en ambas pestañas (el
+  mensaje será los datos que enviaremos).
+-Debemos instalar 'socket.io'.
 
-Websockets:
-  -Para conexiones que requieren datos en tiempo real.
-  -El cliente solicita al servidor que requiere una conexión en tiempo real.
-  -Se crea un tunel entre el cliente y el servidor.
-  -Cada vez que el servidor tiene información nueva, se la envia al cliente.
-  -Este tunel permanece abierto hasta que uno de los 2 decida cerrarlo.
-  -Sí el cliente quiere enviar datos al server, lo hace de igualforma mediante el mismo
-    tunel.
-  -Sí en lugar de un cliente, tenemos varios, todos se conectarán mediante ese mismo tunel,
-    todos al mismo.
-  -Sí en ese caso, un cliente envia datos al server, esos datos le llegan a todos los 
-    clientes.
-  -Esto nos ayuda en aplicaciones en tiempo real, chats, o en estos mismos, si queremos 
-    enviar un mensaje, que nunca se guarde, podemos hacerlo mediante websockets.
-  -En la app de Uber, los autos se ven en tiempo real, tambien por este protocolo.
-  -Todo lo que se deba hacer en tiempo real, es por websockets.
+Archivo socket.js:
+  -Importamos socket.io.
+  -Creamos un objeto socket.
+  -Creamos una fución para conectar el socket, y tendrá el server como parametro.
+  -Al elemento 'io' del socket se le da como valor el metodo socket.io, es un metodo, que 
+    se le da por parametro el server.
+  -Se exporta la función y el socket.
+
+Reestructuramos el server.js:
+  -Creamos al app de express al inicio.
+  -Traemos http, de esto usaremos Server(), que llevará como parametro la app de express.
+  -App no será el que escuchara conexiones, sino http.
+  -Usamos función de conexión del socket, y le damos por parametro el server http.
+
+Controller.js:
+  -En el controler, en el post, despues de usar la función del store, usaremos el metodo
+    emit(), este es del elemento io del objeto socket de su archivo.
+  -Le damos por parametro:
+    .Ruta en la que se activará al hacer el post (message).
+    .Lo que emitiremos (en nuestro caso los datos que enviamos por post).
+  -Lo emitido lo recibiremos en un srcipt del html.
+
+html en public:
+  -Este será el html que estamos sirviendo.
+  -Tendrá un script declarado en el body, y otro existente en el head.
+  -El del head, será uno existente al instalar socket io, la dirección en el src se 
+    colocaría: '/socket.io/socket.io.js'.
+  -El del body hará lo siguiente:
+    .Conectamos con el socket: Creamos una variable que tenga como valor io.connect(), el 
+      io se usa por haber puesto el sctipt en el head. Tiene como parametros la página 
+      donde se conectará (localhost...) y un objeto con config. que solo será 'forceNew' en
+      true.
+    -De eso, aplicamos el metodo on(), y lleva por parametros tambien la ruta en donde se 
+      hará el post ('message'), y una función donde se manipulara la info. enviada por el
+      emit, este se encuentra en el parametro de esta función.
+  -Por ahora se enviara por consola.
