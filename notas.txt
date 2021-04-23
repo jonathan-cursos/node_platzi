@@ -1,19 +1,26 @@
-Guardar el fichero en el servidor
+WebSockets: Qué son, por qué son interesantes y cómo usarlos
 
--Al estar enviando un archivo, podemos acceder a este desde los metodos a traves de la
-  request, en su elemento file.
--Podemos acceder así a toda su info. Como la ruta principal desde donde estamos.
--La idea no es guardar el archivo en la DB, sino una referencia a ellos.
--En nuestro router tenemos una ruta para archivos estaticos, por lo que, el archivo que 
-  vamos a serir debemos tenerlo en la carpeta que estamos sirviendo en esa ruta.
--En el post, colocaremos que se guarde ese req.file, y debemos colocarlo tambien en el
-  controller.
--En el controller debemos guardar como elemento del archivo, la ruta hacia el, que estará 
-  en el localhost, en la ruta donde guardamos ese archivo, y colocaremos el nombre del 
-  archivo.
--Sí el archivo será uno que estamos enviando por post, y lo estamos guardando, como el 
-  nombre cambia, lo sacaremos del parametro de ese archivo, en el elemento filename.
--Debemos tambien colocar el esquema, para que guarde esa referencia en un elemento de tipo
-  String.
+-Como se dijo al inicio, el cliente hace una petición al servidor para consultar mensajes.
+-Imaginemos que quremos saber constantemente si hay mensajes nuevos.
+-Una solución puede ser tener un endpoint /newMessages, que se ejecute por ejemplo cada
+  2s.
+-El problema con esto, es que sí son demasiados usuarios, serían todas esas peticiones cada
+  2s, que sería un desperdicio de recursos grande.
+-Para solucionar esto existe un protocolo diferente a http, llamado websockets.
 
--Sí accedemos a la ruta de ese archivo, debería descargarse (no está funcionando).
+Websockets:
+  -Para conexiones que requieren datos en tiempo real.
+  -El cliente solicita al servidor que requiere una conexión en tiempo real.
+  -Se crea un tunel entre el cliente y el servidor.
+  -Cada vez que el servidor tiene información nueva, se la envia al cliente.
+  -Este tunel permanece abierto hasta que uno de los 2 decida cerrarlo.
+  -Sí el cliente quiere enviar datos al server, lo hace de igualforma mediante el mismo
+    tunel.
+  -Sí en lugar de un cliente, tenemos varios, todos se conectarán mediante ese mismo tunel,
+    todos al mismo.
+  -Sí en ese caso, un cliente envia datos al server, esos datos le llegan a todos los 
+    clientes.
+  -Esto nos ayuda en aplicaciones en tiempo real, chats, o en estos mismos, si queremos 
+    enviar un mensaje, que nunca se guarde, podemos hacerlo mediante websockets.
+  -En la app de Uber, los autos se ven en tiempo real, tambien por este protocolo.
+  -Todo lo que se deba hacer en tiempo real, es por websockets.
