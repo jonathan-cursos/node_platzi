@@ -5,23 +5,20 @@ const db = require("./db");
 const router = require("./network/routes");
 const socket = require("./socket");
 const cors = require("cors");
+const config = require("./config");
 
-const port = process.env.PORT || 3000;
-
-db(
-  "mongodb+srv://db_user_jonathangg03:pc1xyyAsUU6e2pGs@cluster0.9mha0.mongodb.net/platzi_messages?retryWrites=true&w=majority"
-);
+db(config.dbUrl);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/app", express.static(__dirname + "/public"));
+app.use(config.publicRoute, express.static(__dirname + "/public"));
 socket.connect(server);
 
 // app.use(router);
 router(app);
 
-server.listen(port, () => {
+server.listen(config.port, () => {
   //El servidor será el que escuchará, no la app de express
-  console.log(`La app está escuchando en http:localhost:${port}`);
+  console.log(`La app está escuchando en ${config.host}:${config.port}`);
 });

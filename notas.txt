@@ -1,11 +1,12 @@
-Revisión y próximos pasos
+Tips para escalar nuestro proyecto
 
--Una recomendación es habilitar las cabeceras CORS.
--El profesor indica que comenzando es bueno que las habilitamos todas, y conforme avanzamos
-  aprendiendo, empecemos a ser reestrictivos con las cabeceras.
--Para ello, debemos instalar cors, e importarlo en el server.
--Lo añadimos con el app. cors, el modulo cors es un metodo.
--Esto es necesario para poder verlo desde un frontend.
+-Lo que haremos será crear un archivo de config. donde se exporte un objeto, este objeto va
+  a tener variables que puedan ser de configuración, que se pueda usar en varios lugares, y
+  tengan como valor variables de entorno, o algun valor por defecto.
+-Esto puede ser como direcciones a bases de datos o puerto, para que en caso que cambien,
+  cambiemos este archivo, y no el código directamente.
 
--Para ello, descargamos la carpeta, la movemos a public, instalamos las dependencias, y
-  ejecutamos el script serve.
+-Otra forma de escalar es en las respuestas:
+  -Se coloca un objeto, donde cada key es cada codigo (al ser numeros, se coloca en string)
+    y cada value el mensaje correspondiente a ese code.
+  -De esta forma dependiendo del código se darán respuestas determinadas.
