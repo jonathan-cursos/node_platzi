@@ -1,43 +1,11 @@
-Conectar la API al servidor de WebSockets
+Revisión y próximos pasos
 
--Lo que haremos será que, si abrimos un html que vamos a servir en 2 pestañas diferentes,
-  al hacer un post, nos va a mostrar por consola el mismo mensaje en ambas pestañas (el
-  mensaje será los datos que enviaremos).
--Debemos instalar 'socket.io'.
+-Una recomendación es habilitar las cabeceras CORS.
+-El profesor indica que comenzando es bueno que las habilitamos todas, y conforme avanzamos
+  aprendiendo, empecemos a ser reestrictivos con las cabeceras.
+-Para ello, debemos instalar cors, e importarlo en el server.
+-Lo añadimos con el app. cors, el modulo cors es un metodo.
+-Esto es necesario para poder verlo desde un frontend.
 
-Archivo socket.js:
-  -Importamos socket.io.
-  -Creamos un objeto socket.
-  -Creamos una fución para conectar el socket, y tendrá el server como parametro.
-  -Al elemento 'io' del socket se le da como valor el metodo socket.io, es un metodo, que 
-    se le da por parametro el server.
-  -Se exporta la función y el socket.
-
-Reestructuramos el server.js:
-  -Creamos al app de express al inicio.
-  -Traemos http, de esto usaremos Server(), que llevará como parametro la app de express.
-  -App no será el que escuchara conexiones, sino http.
-  -Usamos función de conexión del socket, y le damos por parametro el server http.
-
-Controller.js:
-  -En el controler, en el post, despues de usar la función del store, usaremos el metodo
-    emit(), este es del elemento io del objeto socket de su archivo.
-  -Le damos por parametro:
-    .Ruta en la que se activará al hacer el post (message).
-    .Lo que emitiremos (en nuestro caso los datos que enviamos por post).
-  -Lo emitido lo recibiremos en un srcipt del html.
-
-html en public:
-  -Este será el html que estamos sirviendo.
-  -Tendrá un script declarado en el body, y otro existente en el head.
-  -El del head, será uno existente al instalar socket io, la dirección en el src se 
-    colocaría: '/socket.io/socket.io.js'.
-  -El del body hará lo siguiente:
-    .Conectamos con el socket: Creamos una variable que tenga como valor io.connect(), el 
-      io se usa por haber puesto el sctipt en el head. Tiene como parametros la página 
-      donde se conectará (localhost...) y un objeto con config. que solo será 'forceNew' en
-      true.
-    -De eso, aplicamos el metodo on(), y lleva por parametros tambien la ruta en donde se 
-      hará el post ('message'), y una función donde se manipulara la info. enviada por el
-      emit, este se encuentra en el parametro de esta función.
-  -Por ahora se enviara por consola.
+-Para ello, descargamos la carpeta, la movemos a public, instalamos las dependencias, y
+  ejecutamos el script serve.
