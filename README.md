@@ -1,2 +1,2 @@
-# nodejs_project
-Un proyecto con node
+# node_platzi
+Curso de Nodejs de Platzi
